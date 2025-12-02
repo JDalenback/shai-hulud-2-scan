@@ -2,14 +2,14 @@
 
 SEARCH_DIR=$1
 
-if [ -z $SEARCH_DIR ]; then
+if [ -z "$SEARCH_DIR" ]; then
     SEARCH_DIR="$HOME"
 fi
 
 progress-bar() {
     local progress=$1
     local package_len=$2
-    local perc_done=$(($progress * 100 / $package_len))
+    local perc_done=$((progress * 100 / package_len))
 echo -ne "\rProcessing file $progress out of $package_len [$perc_done%]"
 }
 
@@ -25,7 +25,7 @@ PACKAGE_FILES=()
 
 while IFS= read -r -d '' package; do
     PACKAGE_FILES+=("$package")
-done < <(find $SEARCH_DIR -name package.json -print0 2>/dev/null)
+done < <(find "$SEARCH_DIR" -name package.json -print0 2>/dev/null)
 
 
 NR_OF_PACKAGES=${#PACKAGE_FILES[@]}
@@ -44,11 +44,12 @@ for package in "${PACKAGE_FILES[@]}"; do
 
         MATCHES+=("--- $package ---")
         for pkg in $USED_PACKAGE; do
-            infected=$(grep "$( sed 's/"//g' <<< "$pkg" | sed 's/:.*//g')" ./shai-hulud-2-packages.csv)
+            infected=$(grep "$( echo "${pkg//\"/}" | sed 's/:.*//g')" ./shai-hulud-2-packages.csv)
             if [[ -z $infected ]]; then
                 infected="No package with this exact name found"
             fi
-            MATCHES+=("Package Used: $(sed 's/,//' <<< "$pkg" | sed 's/"//g') - Infected Package: $(sed 's/,=/:/g' <<< $infected)")
+            #MATCHES+=("Package Used: $(sed 's/,//' <<< "$pkg" | sed 's/"//g') - Infected Package: $(sed 's/,=/:/g' <<< $infected)")
+            MATCHES+=("Package Used: $(echo "${pkg//,/}" | sed 's/"//g') - Infected Package: ${infected//,=/:}")
         done
         MATCHES+=("")
     fi
