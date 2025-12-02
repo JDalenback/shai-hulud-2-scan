@@ -1,4 +1,8 @@
-# Usage
+# Info
+
+This script searches for package.json files and compares them towards a list of packages affected by the shai-hulud 2.0 attack on NPM. The script does not alter any files and does not provide any fixes for infected versions.
+
+## Usage
 
 The script requires that you have bash installed.
 Make the script executable: `chmod +x scan-for-shai-hulud.sh`
