@@ -48,7 +48,6 @@ for package in "${PACKAGE_FILES[@]}"; do
             if [[ -z $infected ]]; then
                 infected="No package with this exact name found"
             fi
-            #MATCHES+=("Package Used: $(sed 's/,//' <<< "$pkg" | sed 's/"//g') - Infected Package: $(sed 's/,=/:/g' <<< $infected)")
             MATCHES+=("Package Used: $(echo "${pkg//,/}" | sed 's/"//g') - Infected Package: ${infected//,=/:}")
         done
         MATCHES+=("")
