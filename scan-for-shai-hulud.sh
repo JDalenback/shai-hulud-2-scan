@@ -25,7 +25,6 @@ PACKAGE_FILES=()
 
 while IFS= read -r -d '' package; do
     PACKAGE_FILES+=("$package")
-    echo $package >> packages
 done < <(find $SEARCH_DIR -name package.json -print0 2>/dev/null)
 
 
@@ -59,7 +58,7 @@ done
 if [ ! ${#MATCHES[@]} -eq 0  ]; then
     echo -ne "\n\nInspect versions of packages below\n"
     echo '"Package Used" is the package found on your computer. "Infected Package" is the package listed as affected by the Shai-Hulud 2.0 attack.'
-    echo "If the versions do not match you should not be affected. However, make sure your versions ar locked so you dont"
+    echo "If the versions do not match you should not be affected. However, make sure your versions ar locked so you dont pull down infected versions."
     echo -ne "\nPossible matches:\n"
 
     for match in "${MATCHES[@]}"; do
