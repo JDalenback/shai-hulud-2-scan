@@ -17,12 +17,11 @@ echo "DISCLAIMER: This script compares package.json files found on your computer
 echo "It is possible that this script miss packages and that you may be affected even if the results of this scripts says that no infected packages were found."
 echo "This script does not address any affected packages or alter any files."
 echo
-echo "Extracting package.json files"
+
 INFECTED_PACKAGES=$(awk '{print $1}' "shai-hulud-2-packages.csv"| sed 's/,=//g' | tr -d ' ')
 
-
+echo "Extracting package.json files - This may take a while"
 PACKAGE_FILES=()
-
 while IFS= read -r -d '' package; do
     PACKAGE_FILES+=("$package")
 done < <(find "$SEARCH_DIR" -name package.json -print0 2>/dev/null)
